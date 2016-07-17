@@ -13,17 +13,12 @@ public class UserServiceJdbc implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User create(String name) {
+    public User create(String name, String groupName) {
         return null;
     }
 
     @Override
-    public boolean delete(User user) {
-        return false;
-    }
-
-    @Override
-    public boolean isUserHasRight(User user, Right right) {
+    public boolean delete(String name) {
         return false;
     }
 
@@ -32,7 +27,8 @@ public class UserServiceJdbc implements UserService {
         return null;
     }
 
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Override
+    public boolean isUserHasRight(String userName, Right right) {
+        return false;
     }
 }

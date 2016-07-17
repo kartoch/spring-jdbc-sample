@@ -1,5 +1,6 @@
 package fr.plil.sio.persistence.api;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Right {
@@ -8,9 +9,11 @@ public class Right {
 
     private String name;
 
+    /// the parent group
     private Right parent;
 
-    private Set<Right> siblings;
+    /// the sibling group(s), eventually empty
+    private Set<Right> siblings = new HashSet<>();
 
     public Set<Right> getSiblings() {
         return siblings;

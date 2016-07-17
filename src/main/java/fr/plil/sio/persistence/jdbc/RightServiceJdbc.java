@@ -4,6 +4,8 @@ import fr.plil.sio.persistence.api.Right;
 import fr.plil.sio.persistence.api.RightService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RightServiceJdbc implements RightService{
     @Override
@@ -17,12 +19,17 @@ public class RightServiceJdbc implements RightService{
     }
 
     @Override
-    public boolean delete(Right group) {
+    public boolean delete(Right right) {
         return false;
     }
 
     @Override
-    public Right findByName(String name) {
+    public List<Right> findByName(String name) {
+        return null;
+    }
+
+    @Override
+    public Right findOne(Long id) {
         return null;
     }
 }
