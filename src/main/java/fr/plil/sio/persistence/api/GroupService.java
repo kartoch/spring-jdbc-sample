@@ -32,32 +32,11 @@ public interface GroupService {
     Group findByName(String name);
 
     /**
-     * Add an user in the group.
-     *
-     * @param groupName the name of the group.
-     * @param userName  the name of the user to add in the group.
-     * @return true if user is added in the group, false if user was already present.
-     * @throws IllegalArgumentException if groupName or userName is null, or if group or user cannot be found.
-     */
-    boolean addUser(String groupName, String userName);
-
-    /**
-     * Remove an user in the group.
-     *
-     * @param groupName the name of the group.
-     * @param userName  the name of the user to remove from the group.
-     * @return true if user is removed from the group, false if user was not present in the group.
-     * @throws IllegalArgumentException if groupName or userName is null, or if group or user cannot be found.
-     */
-    boolean removeUser(String groupName, String userName);
-
-    /**
      * Add a right in the group. Right is inserted at the end of rights list of the group.
      *
      * @param groupName the name of the group.
      * @param right     the right to add
      * @return true if right is added in the group, false if right was already present.
-     * @throws IllegalStateException    if a parent right is already present
      * @throws IllegalArgumentException if groupName or right is null, or if group or right cannot be found.
      */
     boolean addRight(String groupName, Right right);

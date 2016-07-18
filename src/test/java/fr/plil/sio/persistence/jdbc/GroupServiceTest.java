@@ -1,61 +1,114 @@
 package fr.plil.sio.persistence.jdbc;
 
-import fr.plil.sio.persistence.api.Group;
-import fr.plil.sio.persistence.api.GroupService;
-import fr.plil.sio.persistence.api.User;
-import fr.plil.sio.persistence.api.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JdbcApplication.class)
 public class GroupServiceTest {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private GroupService groupService;
-
     @Test
-    public void testCreateAndFindByName() {
-        groupService.create("group1");
-        Group group2 = groupService.findByName("group1");
-        assertNotNull(group2);
-        assertNotNull(group2.getName());
-        assertEquals("group1", group2.getName());
+    public void testCreateGroupAndFindByName() {
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateGroupFailsWhenNameNull() {
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCreateFailsWhenSameGroupUserAlreadyPresent() {
+    }
+
+    public void testDeleteGroup() {
+    }
+
+    public void testDeleteGroupIfNotFound() {
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteGroupFailsIfNameNull() {
     }
 
     @Test
-    public void addUsersAndCheckIfPresent() {
-        Group group1 = groupService.create("group1");
-        User user1 = userService.create("user1");
-        User user2 = userService.create("user2");
-        groupService.addUser(group1, user1);
-        groupService.addUser(group1, user2);
-        Group group2 = groupService.findByName("group1");
-        assertNotNull(group2);
-        assertNotNull(group2.getName());
-        assertEquals("group1", group2.getName());
-        assertEquals(2, group2.getUsers().size());
+    public void deleteGroupDoesDeleteUsers() {
+    }
+
+    public void testFindByNameIfUserNotFound() {
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindByNameFailsIfNameNull() {
     }
 
     @Test
-    public void deleteGroupDoesNotDeleteUsers() {
-        Group group1 = groupService.create("group1");
-        User user1 = userService.create("user1");
-        User user2 = userService.create("user2");
-        groupService.addUser(group1, user1);
-        groupService.addUser(group1, user2);
-        groupService.delete(group1);
-        assertNotNull(userService.findByName("user1"));
-        assertNotNull(userService.findByName("user2"));
+    public void testAddRight() {
+
     }
 
+    @Test
+    public void testAddRightIfAlreadyPresent() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddRightFailsIfGroupNameNull() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddRightFailsIfRightNull() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddRightFailsIfGroupNotInDatabase() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddUserFailsIfRightNotInDatabase() {
+
+    }
+
+
+    /**
+     * Remove a right associated with a group.
+     *
+     * @param groupName the name of the group.
+     * @param right     the right to remove
+     * @return true if right is removed from the group, false if teh right was not present in the group.
+     * @throws IllegalArgumentException if groupName or right is null, or if group or right cannot be found.
+     */
+
+    @Test
+    public void testRemoveRight() {
+
+    }
+
+    @Test
+    public void testRemoveRightIfNotPresent() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveRightFailsIfGroupNameNull() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveRightFailsIfRightNull() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveRightFailsIfGroupNotInDatabase() {
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveRightFailsIfRightNotInDatabase() {
+
+    }
 }
