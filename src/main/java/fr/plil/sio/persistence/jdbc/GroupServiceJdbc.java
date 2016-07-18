@@ -3,13 +3,28 @@ package fr.plil.sio.persistence.jdbc;
 import fr.plil.sio.persistence.api.Group;
 import fr.plil.sio.persistence.api.GroupService;
 import fr.plil.sio.persistence.api.Right;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GroupServiceJdbc implements GroupService {
+
+    @Autowired
+    private GroupRepository groupRepository;
+
     @Override
     public Group create(String name) {
-        return null;
+        if (name == null) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        Group group = groupRepository.findByName(name);
+        if (group != null) {
+            throw new IllegalStateException("a group with the same name already exists");
+        }
+        group = new Group();
+        group.setName(name);
+        groupRepository.save(group);
+        return group;
     }
 
     @Override
@@ -19,17 +34,10 @@ public class GroupServiceJdbc implements GroupService {
 
     @Override
     public Group findByName(String name) {
-        return null;
-    }
-
-    @Override
-    public boolean addUser(String groupName, String userName) {
-        return false;
-    }
-
-    @Override
-    public boolean removeUser(String groupName, String userName) {
-        return false;
+        if (name == null) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+        return groupRepository.findByName(name);
     }
 
     @Override

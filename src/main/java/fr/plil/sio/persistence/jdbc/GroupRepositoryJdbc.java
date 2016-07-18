@@ -1,6 +1,6 @@
 package fr.plil.sio.persistence.jdbc;
 
-import fr.plil.sio.persistence.api.User;
+import fr.plil.sio.persistence.api.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +12,26 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Repository
-public class UserRepositoryJdbc implements UserRepository {
+public class GroupRepositoryJdbc implements GroupRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryJdbc.class);
+    private static final Logger logger = LoggerFactory.getLogger(GroupRepository.class);
 
     @Autowired
     private DataSource dataSource;
 
     @Override
-    public User findByName(String name) {
+    public Group findByName(String name) {
         Statement stmt = null;
         ResultSet rs = null;
         try {
             stmt = dataSource.getConnection().createStatement();
             rs = stmt.executeQuery("SELECT * FROM GROUP_T WHERE NAME_C = \'" + name + "\'");
             if (rs.next()) {
-                logger.debug("found user " + name);
-                User user = new User();
-                user.setId(rs.getLong("GROUP_ID"));
-                user.setName(rs.getString("NAME_C"));
-                return user;
+                logger.debug("found group " + name);
+                Group group = new Group();
+                group.setId(rs.getLong("GROUP_ID"));
+                group.setName(rs.getString("NAME_C"));
+                return group;
             } else {
                 logger.debug("not found " + name);
                 return null;
@@ -54,21 +54,16 @@ public class UserRepositoryJdbc implements UserRepository {
     }
 
     @Override
-    public void delete(Long id) {
-        throw new IllegalStateException("not implemented !");
-    }
-
-    @Override
-    public void save(User user) {
+    public void save(Group group) {
         Statement stmt = null;
         ResultSet rs = null;
         try {
             stmt = dataSource.getConnection().createStatement();
-            stmt.executeUpdate("INSERT INTO USER_T (NAME_C) VALUES (\'" + user.getName() + "\')",
+            stmt.executeUpdate("INSERT INTO GROUP_T (NAME_C) VALUES (\'" + group.getName() + "\')",
                     Statement.RETURN_GENERATED_KEYS);
             rs = stmt.getGeneratedKeys();
             if (rs.next()) {
-                user.setId(rs.getLong(1));
+                group.setId(rs.getLong(1));
             } else {
                 throw new UnsupportedOperationException("default in key access");
             }
@@ -87,5 +82,10 @@ public class UserRepositoryJdbc implements UserRepository {
             }
         }
 
+    }
+
+    @Override
+    public void delete(Long id) {
+        throw new IllegalStateException("not implemented !");
     }
 }

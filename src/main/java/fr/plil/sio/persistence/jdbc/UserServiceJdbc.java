@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceJdbc implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private GroupRepository userRepository;
 
     @Override
     public User create(String name, String groupName) {
