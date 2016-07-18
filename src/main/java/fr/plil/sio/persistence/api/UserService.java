@@ -7,6 +7,7 @@ public interface UserService {
      * There is no two users with the same name in the database.
      *
      * @param name the name of the user
+     * @param groupName the name of the group
      * @return an instance of the user
      * @throws IllegalArgumentException if name or groupName is null, or if group does not exist.
      * @throws IllegalStateException    if an user with the same name is already present

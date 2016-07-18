@@ -9,7 +9,7 @@ public interface GroupService {
      * @param name the name of the group
      * @return an instance of the group
      * @throws IllegalArgumentException if name is null
-     * @throws IllegalStateException    if a group with the same name is already present
+     * @throws IllegalStateException if a group with the same name is already present
      */
     Group create(String name);
 

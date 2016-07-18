@@ -24,11 +24,11 @@ public interface RightService {
     Right create(String name, Right parent);
 
     /**
-     * Delete a right in the database.
+     * Delete a right in the database. Delete sibling rights if present.
      *
      * @param right the right to delete
-     * @return true if right has been deleted
-     * @throws IllegalArgumentException if right is null or if right is not found in the database.
+     * @return true if right has been deleted, false else.
+     * @throws IllegalArgumentException if right is null.
      */
     boolean delete(Right right);
 
