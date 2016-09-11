@@ -29,7 +29,7 @@ public class GroupServiceJdbc implements GroupService {
 
     @Override
     public boolean delete(String name) {
-        return false;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
@@ -42,11 +42,11 @@ public class GroupServiceJdbc implements GroupService {
 
     @Override
     public boolean addRight(String groupName, Right right) {
-        return false;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
     public boolean removeRight(String groupName, Right right) {
-        return false;
+        throw new IllegalStateException("not implemented !");
     }
 }

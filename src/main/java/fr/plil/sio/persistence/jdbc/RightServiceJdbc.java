@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RightServiceJdbc implements RightService{
+public class RightServiceJdbc implements RightService {
     @Override
     public Right create(String name) {
         return null;
@@ -15,21 +15,21 @@ public class RightServiceJdbc implements RightService{
 
     @Override
     public Right create(String name, Right parent) {
-        return null;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
     public boolean delete(Right right) {
-        return false;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
     public List<Right> findByName(String name) {
-        return null;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
     public Right findOne(Long id) {
-        return null;
+        throw new IllegalStateException("not implemented !");
     }
 }

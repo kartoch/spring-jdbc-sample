@@ -1,8 +1,6 @@
 package fr.plil.sio.persistence.jdbc;
 
-import fr.plil.sio.persistence.api.Group;
-import fr.plil.sio.persistence.api.GroupService;
-import fr.plil.sio.persistence.api.UserService;
+import fr.plil.sio.persistence.api.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +12,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JdbcApplication.class)
-public class GroupServiceTest {
+public class GroupServiceTest extends AbstractServiceSupport {
 
     @Autowired
     private GroupService groupService;
@@ -22,8 +20,15 @@ public class GroupServiceTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RightService rightService;
+
+    private Right parent;
+
     @Before
     public void before() {
+        parent = rightService.create("parent");
+        rightService.create("sibling", parent);
         groupService.create("group");
     }
 
@@ -46,8 +51,13 @@ public class GroupServiceTest {
     public void testDeleteGroup() {
         assertTrue(groupService.delete("group"));
         assertNull(groupService.findByName("group"));
-        assertFalse(groupService.delete("unknown"));
+        assertFalse(groupService.delete("group"));
     }
+
+    public void testDeleteNotExistingGroup() {
+        assertFalse(groupService.delete("not-a-group"));
+    }
+
 
     @Test(expected = IllegalArgumentException.class)
     public void testDeleteGroupFailsIfNameNull() {
@@ -65,7 +75,7 @@ public class GroupServiceTest {
         assertNull(userService.findByName("user2"));
     }
 
-    public void testFindByNameIfUserNotFound() {
+    public void testFindByNameIfGroupNotFound() {
         assertNull(groupService.findByName("unknown"));
     }
 
@@ -76,61 +86,64 @@ public class GroupServiceTest {
 
     @Test
     public void testAddRight() {
-
+        assertTrue(groupService.addRight("group", parent));
+        Group group = groupService.findByName("group");
+        assertEquals(1, group.getRights().size());
+        assertEquals("parent", group.getRights().get(0).getName());
+        assertEquals(1, group.getRights().get(0).getSiblings().size());
+        assertEquals("sibling", group.getRights().get(0).getSiblings().iterator().next().getName());
     }
 
     @Test
     public void testAddRightIfAlreadyPresent() {
-
+        assertTrue(groupService.addRight("group", parent));
+        assertFalse(groupService.addRight("group", parent));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddRightFailsIfGroupNameNull() {
-
+        groupService.addRight(null, parent);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddRightFailsIfRightNull() {
-
+        groupService.addRight("group", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddRightFailsIfGroupNotInDatabase() {
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAddUserFailsIfRightNotInDatabase() {
-
+        groupService.addRight("not-a-group", null);
     }
 
     @Test
     public void testRemoveRight() {
-
+        assertTrue(groupService.addRight("group", parent));
+        Group group = groupService.findByName("group");
+        assertEquals(1, group.getRights().size());
+        assertTrue(groupService.removeRight("group", parent));
+        group = groupService.findByName("group");
+        assertEquals(0, group.getRights().size());
     }
 
     @Test
     public void testRemoveRightIfNotPresent() {
-
+        Right right = new Right();
+        right.setName("not-a-right");
+        assertFalse(groupService.removeRight("group", right));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testRemoveRightFailsIfGroupNameNull() {
-
+        groupService.removeRight(null, parent);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testRemoveRightFailsIfRightNull() {
-
+        groupService.removeRight("group", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testRemoveRightFailsIfGroupNotInDatabase() {
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testRemoveRightFailsIfRightNotInDatabase() {
-
+        groupService.removeRight("not-a-group", null);
     }
 }

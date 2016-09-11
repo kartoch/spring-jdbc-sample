@@ -14,21 +14,21 @@ public class UserServiceJdbc implements UserService {
 
     @Override
     public User create(String name, String groupName) {
-        return null;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
     public boolean delete(String name) {
-        return false;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
     public User findByName(String name) {
-        return null;
+        throw new IllegalStateException("not implemented !");
     }
 
     @Override
     public boolean isUserHasRight(String userName, Right right) {
-        return false;
+        throw new IllegalStateException("not implemented !");
     }
 }
