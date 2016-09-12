@@ -63,10 +63,12 @@ public class UserServiceTest extends AbstractServiceSupport {
         userService.create("user", "group");
     }
 
+    @Test
     public void testDeleteUser() {
         assertTrue(userService.delete("user"));
     }
 
+    @Test
     public void testDeleteUserIfNotFound() {
         assertFalse(userService.delete("user"));
     }
@@ -85,16 +87,19 @@ public class UserServiceTest extends AbstractServiceSupport {
         assertNull(userService.findByName(null));
     }
 
+    @Test
     public void testIsUserHasExactRight() {
         Right right = rightService.findByName("parent").get(0);
         assertTrue(userService.isUserHasRight("user", right));
     }
 
+    @Test
     public void testIsUserHasRightByParents() {
         Right right = rightService.findByName("sibling").get(0);
         assertTrue(userService.isUserHasRight("user", right));
     }
 
+    @Test
     public void testIsUserHasNotTheExactRight() {
         Right right = rightService.findByName("not-for-me").get(0);
         assertFalse(userService.isUserHasRight("user", right));

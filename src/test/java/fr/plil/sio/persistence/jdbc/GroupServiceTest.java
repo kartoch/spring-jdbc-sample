@@ -48,12 +48,14 @@ public class GroupServiceTest extends AbstractServiceSupport {
         groupService.create("group");
     }
 
+    @Test
     public void testDeleteGroup() {
         assertTrue(groupService.delete("group"));
         assertNull(groupService.findByName("group"));
         assertFalse(groupService.delete("group"));
     }
 
+    @Test
     public void testDeleteNotExistingGroup() {
         assertFalse(groupService.delete("not-a-group"));
     }
