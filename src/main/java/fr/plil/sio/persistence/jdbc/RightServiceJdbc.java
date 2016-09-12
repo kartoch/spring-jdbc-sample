@@ -15,7 +15,7 @@ public class RightServiceJdbc implements RightService {
 
     @Override
     public Right create(String name, Right parent) {
-        throw new IllegalStateException("not implemented !");
+        return null;
     }
 
     @Override
