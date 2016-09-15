@@ -9,10 +9,10 @@ public class Right {
 
     private String name;
 
-    /// the parent group
+    /// the parent right
     private Right parent;
 
-    /// the sibling group(s), eventually empty
+    /// the sibling right(s), eventually empty
     private Set<Right> siblings = new HashSet<>();
 
     public Set<Right> getSiblings() {
