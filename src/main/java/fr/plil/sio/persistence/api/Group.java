@@ -2,8 +2,6 @@ package fr.plil.sio.persistence.api;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class Group {
 
@@ -14,7 +12,7 @@ public class Group {
     /**
      * Users in the group.
      */
-    private Set<User> users = new TreeSet<>();
+    private List<User> users = new LinkedList<>();
 
     /**
      * List of rights. The list CANNOT contains duplicate rights.
@@ -45,11 +43,11 @@ public class Group {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }

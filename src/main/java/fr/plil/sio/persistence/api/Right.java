@@ -1,7 +1,7 @@
 package fr.plil.sio.persistence.api;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Right {
 
@@ -13,13 +13,13 @@ public class Right {
     private Right parent;
 
     /// the sibling right(s), eventually empty
-    private Set<Right> siblings = new HashSet<>();
+    private List<Right> siblings = new LinkedList<>();
 
-    public Set<Right> getSiblings() {
+    public List<Right> getSiblings() {
         return siblings;
     }
 
-    public void setSiblings(Set<Right> siblings) {
+    public void setSiblings(List<Right> siblings) {
         this.siblings = siblings;
     }
 

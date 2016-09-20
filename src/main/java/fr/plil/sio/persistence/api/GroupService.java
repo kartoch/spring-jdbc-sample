@@ -23,7 +23,8 @@ public interface GroupService {
     boolean delete(String name);
 
     /**
-     * Find a group in the database based on its name.
+     * Find a group in the database based on its name. Only references at one level are available (i.e. the users
+     * who belong to the group).
      *
      * @param name the name of the group to search for.
      * @return an instance of the group if found, else null.
@@ -32,7 +33,7 @@ public interface GroupService {
     Group findByName(String name);
 
     /**
-     * Add a right in the group. Right is inserted at the end of rights list of the group.
+     * Add a right in the group.
      *
      * @param groupName the name of the group.
      * @param right     the right to add
