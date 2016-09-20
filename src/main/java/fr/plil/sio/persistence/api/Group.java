@@ -3,6 +3,10 @@ package fr.plil.sio.persistence.api;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * A group is unique by its name (no two groups with the same name or the same ID can exist in the database).
+ * A group contains a list of rights unique by their ID (no two groups with the same ID can exist in the database).
+ */
 public class Group {
 
     private Long id;

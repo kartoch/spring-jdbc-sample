@@ -4,7 +4,7 @@ public interface GroupService {
 
     /**
      * Create a group with a specific name in the database.
-     * There is no two groups with the same name in the database.
+     * There is no two groups with the same name or the same ID in the database.
      *
      * @param name the name of the group
      * @return an instance of the group
@@ -23,7 +23,7 @@ public interface GroupService {
     boolean delete(String name);
 
     /**
-     * Find a group in the database based on its name. Only references at one level are available (i.e. the users
+     * Find a group in the database based on its name. Only references at one level are loaded (i.e. the users
      * who belong to the group).
      *
      * @param name the name of the group to search for.

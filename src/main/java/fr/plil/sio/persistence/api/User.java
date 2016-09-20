@@ -1,5 +1,9 @@
 package fr.plil.sio.persistence.api;
 
+/**
+ * An user MUST have a group in the database.
+ * An user is unique by it name, i.e. database cannot contain two user with the same name or the same ID.
+ */
 public class User {
 
     private Long id;
