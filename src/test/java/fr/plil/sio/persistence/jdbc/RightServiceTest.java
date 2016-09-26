@@ -86,8 +86,8 @@ public class RightServiceTest extends AbstractServiceSupport {
         assertEquals(0, rightService.findByName("parent").size());
     }
 
-    @Test
-    public void testDeleteRightIfNotFound() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteRightIfNotInDatabase() {
         Right right = new Right();
         right.setName("not-a-right");
         assertFalse(rightService.delete(right));
