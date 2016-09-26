@@ -69,7 +69,7 @@ public class GroupServiceTest extends AbstractServiceSupport {
     @Test
     public void deleteGroupDoesDeleteUsers() {
         userService.create("user1", "group");
-        userService.create("user1", "group");
+        userService.create("user2", "group");
         assertNotNull(userService.findByName("user1"));
         assertNotNull(userService.findByName("user2"));
         groupService.delete("group");
