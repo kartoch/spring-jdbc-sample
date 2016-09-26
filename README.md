@@ -1,7 +1,22 @@
+Description
+===========
+
+
+
+
 TODO
-----
+====
 
-* Add usage scenario
-* Clarify tree of rights
-* Tests for one-level dependencies
+Documentation
+-------------
 
+* add usage scenario
+* clarify tree of rights
+* clarify why the dependencies need to be managed in the service (to avoid to break the
+CRUD model, *i.e.* reppsitory methods are specialised to load the one-level 
+dependencies, thus cannot be used to load object as dependencies  
+
+Tests
+-----
+
+* tests for one-level dependencies
