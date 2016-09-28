@@ -70,6 +70,7 @@ public class UserServiceTest extends AbstractServiceSupport {
 
     @Test
     public void testDeleteUserIfNotFound() {
+        userService.delete("user");
         assertFalse(userService.delete("user"));
     }
 
