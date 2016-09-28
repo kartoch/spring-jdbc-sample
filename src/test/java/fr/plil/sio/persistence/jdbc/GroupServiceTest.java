@@ -92,8 +92,6 @@ public class GroupServiceTest extends AbstractServiceSupport {
         Group group = groupService.findByName("group");
         assertEquals(1, group.getRights().size());
         assertEquals("parent", group.getRights().get(0).getName());
-        assertEquals(1, group.getRights().get(0).getSiblings().size());
-        assertEquals("sibling", group.getRights().get(0).getSiblings().iterator().next().getName());
     }
 
     @Test
