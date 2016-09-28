@@ -15,8 +15,7 @@ public interface RightService {
 
     /**
      * Create a sibling right attached to a parent right with a specific name in the database.
-     * It is possible that two rights has the same name.
-     * Return only the right with the parent in the field parent.
+     * It is possible that two rights has the same name. Return only the right with the parent in the field parent.
      *
      *
      * @param name   the name of the right

@@ -5,6 +5,7 @@ public interface UserService {
     /**
      * Create an user with a specific name in the database and affected to an existing group.
      * There is no two users with the same name in the database.
+     * Only references at one level are loaded (i.e. the group where the user belong).
      *
      * @param name the name of the user
      * @param groupName the name of the group
