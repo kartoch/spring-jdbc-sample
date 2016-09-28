@@ -90,7 +90,7 @@ public class RightServiceTest extends AbstractServiceSupport {
     public void testDeleteRightIfNotInDatabase() {
         Right right = new Right();
         right.setName("not-a-right");
-        assertFalse(rightService.delete(right));
+        rightService.delete(right);
     }
 
     @Test(expected = IllegalArgumentException.class)
