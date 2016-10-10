@@ -79,6 +79,7 @@ public class UserServiceTest extends AbstractServiceSupport {
         userService.delete(null);
     }
 
+    @Test
     public void testFindUserByNameIfUserNotFound() {
         assertNull(userService.findByName("blabla"));
     }
