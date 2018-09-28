@@ -119,9 +119,17 @@ public class UserServiceTest extends AbstractServiceSupport {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testIsUserHasRightFailsWhenRightNotInDatabase() {
+    public void testIsUserHasRightFailsWhenRightHasNoId() {
         Right right = new Right();
         right.setName("dummy");
+        userService.isUserHasRight("user", right);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIsUserHasRightFailsWhenRightNotInDatabase() {
+        Right right = rightService.create("dummy");
+        assertNotNull(right.getId());
+        rightService.delete(right);
         userService.isUserHasRight("user", right);
     }
 
