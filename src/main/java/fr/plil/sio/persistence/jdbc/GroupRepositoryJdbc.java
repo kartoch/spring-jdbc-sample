@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,15 +17,16 @@ public class GroupRepositoryJdbc implements GroupRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupRepository.class);
 
-    @Autowired
     private DataSource dataSource;
 
     @Override
     public Group findByName(String name) {
         Statement stmt = null;
         ResultSet rs = null;
+        Connection connection = null;
         try {
-            stmt = dataSource.getConnection().createStatement();
+            connection = dataSource.getConnection();
+            stmt = connection.createStatement();
             rs = stmt.executeQuery("SELECT * FROM GROUP_T WHERE NAME_C = \'" + name + "\'");
             if (rs.next()) {
                 logger.debug("found group " + name);
@@ -46,6 +48,9 @@ public class GroupRepositoryJdbc implements GroupRepository {
                 if (stmt != null) {
                     stmt.close();
                 }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 throw new UnsupportedOperationException("sql exception during close", e);
 
@@ -57,8 +62,10 @@ public class GroupRepositoryJdbc implements GroupRepository {
     public void save(Group group) {
         Statement stmt = null;
         ResultSet rs = null;
+        Connection connection = null;
         try {
-            stmt = dataSource.getConnection().createStatement();
+            connection = dataSource.getConnection();
+            stmt = connection.createStatement();
             stmt.executeUpdate("INSERT INTO GROUP_T (NAME_C) VALUES (\'" + group.getName() + "\')",
                     Statement.RETURN_GENERATED_KEYS);
             rs = stmt.getGeneratedKeys();
@@ -77,6 +84,9 @@ public class GroupRepositoryJdbc implements GroupRepository {
                 if (stmt != null) {
                     stmt.close();
                 }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 throw new UnsupportedOperationException("sql exception during close", e);
             }
@@ -87,5 +97,10 @@ public class GroupRepositoryJdbc implements GroupRepository {
     @Override
     public void delete(Long id) {
         throw new IllegalStateException("not implemented !");
+    }
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 }

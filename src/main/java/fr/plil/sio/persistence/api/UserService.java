@@ -26,6 +26,7 @@ public interface UserService {
 
     /**
      * Find an user in the database based on its name.
+     * All dependencies at one-level are loaded, i.e for each user returned the group is present.
      *
      * @param name the name of the user to search for.
      * @return an instance of the user if found, else null.

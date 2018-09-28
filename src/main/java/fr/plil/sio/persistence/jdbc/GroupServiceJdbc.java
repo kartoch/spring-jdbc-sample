@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class GroupServiceJdbc implements GroupService {
 
-    @Autowired
     private GroupRepository groupRepository;
 
     @Override
@@ -48,5 +47,10 @@ public class GroupServiceJdbc implements GroupService {
     @Override
     public boolean removeRight(String groupName, Right right) {
         throw new IllegalStateException("not implemented !");
+    }
+
+    @Autowired
+    public void setGroupRepository(GroupRepository groupRepository) {
+        this.groupRepository = groupRepository;
     }
 }

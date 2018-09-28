@@ -24,7 +24,7 @@ public interface GroupService {
 
     /**
      * Find a group in the database based on its name. Only references at one level are loaded (i.e. the users
-     * who belong to the group).
+     * who belong to the group and the rights associated to the group).
      *
      * @param name the name of the group to search for.
      * @return an instance of the group if found, else null.

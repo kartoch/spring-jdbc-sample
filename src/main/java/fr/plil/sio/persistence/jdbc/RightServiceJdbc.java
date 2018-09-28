@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public class RightServiceJdbc implements RightService {
+
     @Override
     public Right create(String name) {
         return null;
