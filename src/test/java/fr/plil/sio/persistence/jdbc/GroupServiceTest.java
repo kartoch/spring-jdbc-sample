@@ -129,7 +129,7 @@ public class GroupServiceTest extends AbstractServiceSupport {
     public void testRemoveRightIfNotInDatabase() {
         Right right = new Right();
         right.setName("not-a-right");
-        assertFalse(groupService.removeRight("group", right));
+        groupService.removeRight("group", right);
     }
 
     @Test(expected = IllegalArgumentException.class)
