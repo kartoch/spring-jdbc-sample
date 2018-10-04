@@ -19,31 +19,25 @@ public abstract class AbstractServiceSupport {
     @Autowired
     private DataSource dataSource;
 
-    private Connection connection;
-
-    private Statement stmt;
-
     @Before
     public void createTables() throws SQLException {
-        openConnection();
-        stmt.executeUpdate(create_table_group);
-        closeConnection();
+        run(new String[]{create_table_group});
     }
 
     @After
     public void cleanupDatabase() throws SQLException {
-        openConnection();
-        stmt.executeUpdate(drop_table_group);
-        closeConnection();
+        run(new String[]{drop_table_group});
     }
 
-    private void closeConnection() throws SQLException {
-        stmt.close();
+    private void run(String[] requests) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        connection.setAutoCommit(false);
+        for (String request : requests) {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(request);
+            stmt.close();
+        }
+        connection.commit();
         connection.close();
-    }
-
-    private void openConnection() throws SQLException {
-        connection = dataSource.getConnection();
-        stmt = connection.createStatement();
     }
 }

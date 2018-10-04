@@ -6,24 +6,45 @@ import fr.plil.sio.persistence.api.Right;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 @Service
 public class GroupServiceJdbc implements GroupService {
+
+    private DataSource dataSource;
 
     private GroupRepository groupRepository;
 
     @Override
     public Group create(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("name cannot be null");
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            if (name == null) {
+                throw new IllegalArgumentException("name cannot be null");
+            }
+            Group group = groupRepository.findByName(name, connection);
+            if (group != null) {
+                throw new IllegalStateException("a group with the same name already exists");
+            }
+            group = new Group();
+            group.setName(name);
+            groupRepository.save(group, connection);
+            connection.commit();
+            return group;
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("sql exception", e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new UnsupportedOperationException("sql exception during connection close", e);
+            }
         }
-        Group group = groupRepository.findByName(name);
-        if (group != null) {
-            throw new IllegalStateException("a group with the same name already exists");
-        }
-        group = new Group();
-        group.setName(name);
-        groupRepository.save(group);
-        return group;
     }
 
     @Override
@@ -33,10 +54,24 @@ public class GroupServiceJdbc implements GroupService {
 
     @Override
     public Group findByName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("name cannot be null");
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            if (name == null) {
+                throw new IllegalArgumentException("name cannot be null");
+            }
+            return groupRepository.findByName(name, connection);
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("sql exception", e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                throw new UnsupportedOperationException("sql exception during connection close", e);
+            }
         }
-        return groupRepository.findByName(name);
     }
 
     @Override
@@ -53,4 +88,10 @@ public class GroupServiceJdbc implements GroupService {
     public void setGroupRepository(GroupRepository groupRepository) {
         this.groupRepository = groupRepository;
     }
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
 }
